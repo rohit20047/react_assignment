@@ -2,8 +2,6 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { Box, Text, VStack, Spinner, Avatar, Input, InputGroup, InputRightElement, IconButton, Button, HStack } from '@chakra-ui/react';
 import { FaRegPaperPlane, FaPaperclip, FaCamera, FaVideo, FaFolderOpen } from 'react-icons/fa';
 import axios from 'axios';
-import formatDate from './convertDate';
-import hasDateChanged from './dateChange';
 import Header from './Header';
 
 interface Message {
@@ -18,7 +16,6 @@ interface Message {
 
 function ChatApp(): JSX.Element {
   // State variables
-  const [putDate, setPutDate] = useState<boolean>(true);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [page, setPage] = useState<number>(0);
@@ -128,7 +125,7 @@ function ChatApp(): JSX.Element {
               {/* Display date if it has changed */}
            
               {/* Display sender's avatar if it's not self */}
-              {!message.sender.self && <Avatar size="sm" src={message.sender.image} alt="User Image" />}
+              {!message.sender.self && <Avatar size="sm" src={message.sender.image} />}
               {/* Display message */}
               <Text ml={2} mr={2} justifyContent="center" textAlign={message.sender.self ? 'right' : 'left'}>
                 <span>{message.message}</span>
@@ -147,7 +144,13 @@ function ChatApp(): JSX.Element {
             style={{ backgroundColor: "white" }}
           />
           <InputRightElement width="4.5rem">
-            <IconButton icon={<FaPaperclip />} variant="ghost" colorScheme="gray" onClick={handleAttachmentIconClick} />
+          <IconButton
+  icon={<FaPaperclip />}
+  variant="ghost"
+  colorScheme="gray"
+  aria-label="Attach File" // Add aria-label attribute here
+  onClick={handleAttachmentIconClick}
+/>
             <FaRegPaperPlane fontSize="1.5rem" cursor="pointer" onClick={handleSendMessage} />
           </InputRightElement>
           {/* Display attachment options if visible */}
