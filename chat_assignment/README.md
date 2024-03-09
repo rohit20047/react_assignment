@@ -1,30 +1,39 @@
-# React + TypeScript + Vite
+# Chat Screen PWA using ReactJS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a Progressive Web Application (PWA) developed with ReactJS to create a chat screen for both Android and iOS devices. It fetches chat data from an API and displays it in a user-friendly interface. The application implements infinite scrolling to load older messages when scrolled above a certain threshold.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Fetches chat data from provided API
+- Implements infinite scrolling
+- Responsive design
+- PWA installation support
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- ReactJS
+- TypeScript
+- Chakra UI
 
-- Configure the top-level `parserOptions` property like this:
+## Installation and Usage
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+1. Clone the repository
+2. Navigate to the project directory
+3. Install dependencies: `npm install`
+4. Run the application: `npm start`
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Deployment
+
+Deploy the application on platforms like Netlify or Vercel for hosting as a PWA. Link your GitHub repository to the deployment platform for automated deployment.
+
+## API
+
+The application fetches chat data from the provided API endpoint:
+`https://qa.corider.in/assignment/chat?page=0`
+
+## Contributors
+
+- [Rohit Reddy](https://github.com/rohit20047)
+
+## Project link 
+- [react Chat assignment](reactchatassignment.netlify.app/)
