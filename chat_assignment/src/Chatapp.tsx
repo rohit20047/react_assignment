@@ -1,22 +1,32 @@
-import  { useState, useEffect, useRef, useCallback } from 'react';
-import {  Box, Text, VStack, Spinner, Avatar, Input, InputGroup, InputRightElement, IconButton, Button, Icon, HStack } from '@chakra-ui/react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { Box, Text, VStack, Spinner, Avatar, Input, InputGroup, InputRightElement, IconButton, Button, HStack } from '@chakra-ui/react';
 import { FaRegPaperPlane, FaPaperclip, FaCamera, FaVideo, FaFolderOpen } from 'react-icons/fa';
 import axios from 'axios';
 import formatDate from './convertDate';
 import hasDateChanged from './dateChange';
 import Header from './Header';
 
-function ChatApp() {
+interface Message {
+  id: string;
+  message: string;
+  time: number;
+  sender: {
+    self: boolean;
+    image: string;
+  };
+}
+
+function ChatApp(): JSX.Element {
   // State variables
-  const [putDate, setPutDate] = useState(true);
-  const [messages, setMessages] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [page, setPage] = useState(0);
-  const [newMessage, setNewMessage] = useState('');
-  const messagesEndRef = useRef(null);
-  const inputRef = useRef(null); // Ref for the input element
-  const [time, setTime] = useState(0);
-  const [isAttachmentOptionsVisible, setIsAttachmentOptionsVisible] = useState(false);
+  const [putDate, setPutDate] = useState<boolean>(true);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [page, setPage] = useState<number>(0);
+  const [newMessage, setNewMessage] = useState<string>('');
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null); // Ref for the input element
+  const [time, setTime] = useState<number>(0);
+  const [isAttachmentOptionsVisible, setIsAttachmentOptionsVisible] = useState<boolean>(false);
 
   // Function to scroll to the bottom of messages
   const scrollToBottom = useCallback(() => {
@@ -32,7 +42,7 @@ function ChatApp() {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await axios.get(`https://qa.corider.in/assignment/chat?page=${page}`);
+        const response = await axios.get<{ chats: Message[] }>(`https://qa.corider.in/assignment/chat?page=${page}`);
         // Append new messages to the existing ones
         setMessages((prevMessages) => [...response.data.chats, ...prevMessages]);
         setIsLoading(false);
@@ -65,7 +75,7 @@ function ChatApp() {
   }, [messages]);
 
   // Handler for input change
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewMessage(e.target.value);
   };
 
@@ -78,7 +88,7 @@ function ChatApp() {
   // Update time every 2 seconds
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setTime(1);
+      setTime((prevTime) => prevTime + 1);
     }, 2000);
     return () => clearInterval(intervalId);
   }, []);
@@ -116,7 +126,7 @@ function ChatApp() {
               maxW="80%"
             >
               {/* Display date if it has changed */}
-              {hasDateChanged(formatDate(message.time)) ? <p>{formatDate(message.time)}</p> : null}
+           
               {/* Display sender's avatar if it's not self */}
               {!message.sender.self && <Avatar size="sm" src={message.sender.image} alt="User Image" />}
               {/* Display message */}
